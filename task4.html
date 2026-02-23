@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Circle Charger</title>
+    <style>
+        body {
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh
+        }
+
+
+        text {
+            fill: white;
+            font-size: 20px;
+            text-anchor: middle;
+            dominant-baseline: middle
+        }
+    </style>
+</head>
+
+<body>
+    <svg width="200" height="200">
+        <circle cx="100" cy="100" r="80" stroke="#222" stroke-width="15" fill="none" />
+        <circle id="progress" cx="100" cy="100" r="80" stroke="red" stroke-width="15" fill="none" stroke-dasharray="502"
+            stroke-dashoffset="502" />
+        <text x="100" y="100" id="percent">0%</text>
+    </svg>
+    <script>
+        let circle = document.getElementById("progress");
+        let percent = 0;
+        let circumference = 502;
+        setInterval(() => {
+            if (percent <= 100) {
+                let offset = circumference - (percent / 100) * circumference;
+                circle.style.strokeDashoffset = offset;
+                circle.style.stroke = `hsl(${percent * 1.2},100%,50%)`;
+                document.getElementById("percent").innerHTML = percent + "%";
+                percent++;
+            }
+        }, 50);
+    </script>
+</body>
+
+</html>

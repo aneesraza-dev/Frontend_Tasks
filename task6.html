@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Health</title>
+    <style>
+        body {
+            background: #111;
+            color: white;
+            text-align: center;
+            font-size: 40px;
+            padding-top: 100px
+        }
+        #hearts{
+            font-size: 100px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="hearts"></div>
+    <script>
+        let max = 5, current = 5;
+        function draw() {
+            let str = "";
+            for (let i = 0; i < current; i++)str += "❤️";
+            for (let i = current; i < max; i++)str += "🖤";
+            document.getElementById("hearts").innerHTML = str;
+        }
+        draw();
+        setInterval(() => {
+            if (current > 0) { current--; }
+            else { current = max; }
+            draw();
+        }, 800);
+    </script>
+</body>
+
+</html>

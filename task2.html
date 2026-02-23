@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matrix Loader</title>
+    <style>
+        body {
+            margin: 0;
+            background: black;
+            overflow: hidden;
+            color: #0f0;
+            font-family: monospace
+        }
+
+        canvas {
+            display: block
+        }
+
+        #percent {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 40px
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="c"></canvas>
+    <div id="percent">0%</div>
+    <script>
+        let c = document.getElementById("c"), ctx = c.getContext("2d");
+        c.height = innerHeight; c.width = innerWidth;
+        let letters = "01ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        letters = letters.split("");
+        let font = 14, cols = c.width / font;
+        let drops = Array(Math.floor(cols)).fill(1);
+        let percent = 0;
+
+        function draw() {
+            ctx.fillStyle = "rgba(0,0,0,0.05)";
+            ctx.fillRect(0, 0, c.width, c.height);
+            ctx.fillStyle = "#0f0"; ctx.font = font + "px monospace";
+            for (let i = 0; i < drops.length; i++) {
+                let text = letters[Math.floor(Math.random() * letters.length)];
+                ctx.fillText(text, i * font, drops[i] * font);
+                if (drops[i] * font > c.height && Math.random() > 0.975) drops[i] = 0;
+                drops[i]++;
+            }
+            if (percent < 100) { percent++; document.getElementById("percent").innerText = percent + "%"; }
+        }
+        setInterval(draw, 50);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizer</title>
+    <style>
+        body {
+            margin: 0;
+            background: #000;
+            display: flex;
+            align-items: flex-end;
+            height: 100vh
+        }
+
+        .bar {
+            flex: 1;
+            margin: 2px;
+            background: red
+        }
+    </style>
+</head>
+
+<body>
+    <script>
+        for (let i = 0; i < 40; i++) {
+            let bar = document.createElement("div");
+            bar.className = "bar";
+            document.body.appendChild(bar);
+        }
+        let bars = document.querySelectorAll(".bar");
+        setInterval(() => {
+            bars.forEach(bar => {
+                let h = Math.random() * 100;
+                bar.style.height = h + "%";
+                bar.style.background = `hsl(${Math.random() * 360},100%,50%)`;
+            });
+        }, 150);
+    </script>
+</body>
+
+</html>

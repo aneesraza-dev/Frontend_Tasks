@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Tetris Style Battery Charger</title>
+<style>
+  body {
+    background: #111;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: Arial, sans-serif;
+  }
+
+  .battery {
+    width: 260px;
+    padding: 20px;
+    border: 6px solid #555;
+    border-radius: 12px;
+    background: #1a1a1a;
+    position: relative;
+  }
+
+  .battery::after {
+    content: "";
+    position: absolute;
+    top: 35%;
+    right: -18px;
+    width: 14px;
+    height: 30%;
+    background: #555;
+    border-radius: 3px;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    gap: 4px;
+  }
+
+  .cell {
+    width: 18px;
+    height: 18px;
+    background: #222;
+    border-radius: 3px;
+    transition: background 0.3s;
+  }
+
+  .percentage {
+    text-align: center;
+    margin-top: 12px;
+    color: #fff;
+    font-size: 18px;
+  }
+</style>
+</head>
+<body>
+
+<div class="battery">
+  <div class="grid" id="grid"></div>
+  <div class="percentage" id="percent">0%</div>
+</div>
+
+<script>
+  const rows = 10;
+  const cols = 10;
+  const totalCells = rows * cols;
+  const grid = document.getElementById("grid");
+  const percentText = document.getElementById("percent");
+
+  let currentCell = 0;
+
+  for (let i = 0; i < totalCells; i++) {
+    const cell = document.createElement("div");
+    cell.classList.add("cell");
+    grid.appendChild(cell);
+  }
+
+  const cells = document.querySelectorAll(".cell");
+
+  function getColor(progress) {
+    const hue = progress * 120; 
+    return `hsl(${hue}, 100%, 50%)`;
+  }
+
+  function charge() {
+    if (currentCell <= totalCells) {
+      const progress = currentCell / totalCells;
+      const color = getColor(progress);
+
+      for (let i = 0; i < currentCell; i++) {
+        cells[i].style.background = color;
+      }
+
+      percentText.textContent = Math.floor(progress * 100) + "%";
+      currentCell++;
+    } else {
+      setTimeout(() => {
+        currentCell = 0;
+        cells.forEach(cell => cell.style.background = "#222");
+      }, 1500);
+    }
+  }
+
+  setInterval(charge, 80);
+</script>
+
+</body>
+</html>
